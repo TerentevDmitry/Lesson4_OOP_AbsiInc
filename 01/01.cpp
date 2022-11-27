@@ -62,7 +62,6 @@ int print_arrayForClassObjects(std::string* arrayForClassObjects, const int quan
     fileOut.close();
 };
 
-
 //Функция создания текстового динамического массива
 std::string* createTextArr(const int quantityAdresses)
 {
