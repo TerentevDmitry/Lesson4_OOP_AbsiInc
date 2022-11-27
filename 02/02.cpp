@@ -53,14 +53,42 @@ int print_arrayForClassObjects(std::string* arrayForClassObjects, const int quan
         return static_cast<int>(codeCommit::fileOutOpenError);
     }
 
-    fileOut << "Адреса:\t" << std::endl;
+    fileOut << "Всего количество адресов: " << quantityAdresses << std::endl << std::endl;
 
-    for (int i = 0; i < quantityAdresses; i++)
+    fileOut << "Адреса:" << std::endl;
+
+    for (int i = 0; i < quantityAdresses - 1; i++)
     {
-        fileOut << i + 1 << ". " << arrayForClassObjects[i] << std::endl;
+        fileOut << i + 1  << ". " << arrayForClassObjects[i] << std::endl;
     }
     fileOut.close();
 };
+
+//Функция сортировки
+void addressSort(std::string* arrayForClassObjects, const int quantityAdresses)
+{
+    bool swapped = false;
+    do {
+        swapped = false;
+        std::string tmp;
+
+        for (int i = quantityAdresses - 1; i > 0; --i) 
+        {
+
+            if (arrayForClassObjects[i - 1] > arrayForClassObjects[i])
+            {
+                tmp = arrayForClassObjects[i];
+                arrayForClassObjects[i] = arrayForClassObjects[i - 1];
+                arrayForClassObjects[i - 1] = tmp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+
+
+
+
+}
 
 //Функция создания текстового динамического массива
 std::string* createTextArr(const int quantityAdresses)
@@ -112,6 +140,7 @@ int main()
     };
     fileIn.close(); //Закрываем файл in.txt
 
+    addressSort(arrayForClassObjects, quantityAdresses);
     print_arrayForClassObjects(arrayForClassObjects, quantityAdresses);
     delete_TextArr(arrayForClassObjects, quantityAdresses);
 
