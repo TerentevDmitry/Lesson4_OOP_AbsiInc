@@ -27,8 +27,8 @@ public:
     // Метод создания строки полного адреса для вывода
     std::string createAdress2Out()
     {
-        cFullAdress =  cNameCity + ", " + cNameStreet + ", " + std::to_string(cNumberHouse)
-                       + ", " + std::to_string(cNumberApartment);
+        cFullAdress = cNameCity + ", " + cNameStreet + ", " + std::to_string(cNumberHouse)
+            + ", " + std::to_string(cNumberApartment);
         return cFullAdress;
     };
 };
@@ -52,14 +52,12 @@ int print_arrayForClassObjects(std::string* arrayForClassObjects, const int quan
         std::cout << "Ошибка открытия файла" << std::endl;
         return static_cast<int>(codeCommit::fileOutOpenError);
     }
-    
-    fileOut << "Всего количество адресов: " << quantityAdresses << std::endl << std::endl;
 
-    fileOut << "Адреса:" << std::endl;
-        
+    fileOut << "Адреса:\t" << std::endl;
+
     for (int i = 0; i < quantityAdresses; i++)
     {
-        fileOut << i+1 << ". " << arrayForClassObjects[i] << std::endl;
+        fileOut << i + 1 << ". " << arrayForClassObjects[i] << std::endl;
     }
     fileOut.close();
 };
@@ -116,6 +114,6 @@ int main()
 
     print_arrayForClassObjects(arrayForClassObjects, quantityAdresses);
     delete_TextArr(arrayForClassObjects, quantityAdresses);
-    
+
     std::cout << "Результат работы программы смотри в файле out.txt" << std::endl;
 }
