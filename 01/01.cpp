@@ -57,9 +57,9 @@ int print_arrayForClassObjects(std::string* arrayForClassObjects, const int quan
 
     fileOut << "Адреса:" << std::endl;
         
-    for (int i = 0; i < quantityAdresses; i++)
+    for (int i = quantityAdresses - 1; i >= 0; i--)
     {
-        fileOut << i+1 << ". " << arrayForClassObjects[i] << std::endl;
+        fileOut << quantityAdresses - i << ". " << arrayForClassObjects[i] << std::endl;
     }
     fileOut.close();
 };
