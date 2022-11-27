@@ -1,114 +1,120 @@
 ﻿#include <iostream>
 #include <cstring>
 #include <fstream>
-
-
-
-
+#include <string>
 
 //Задача 1. Адреса
 
 class Adress //Класс Адрес с методами
 {
 private:
-    int cCounterResult = 0;
+    std::string cNameCity;
+    std::string cNameStreet;
+    int cNumberHouse = 0;
+    int cNumberApartment = 0;
+    std::string cFullAdress;
 
 public:
-
-    int cInitialInitValue = 1;
-
-    int setCounter(int initialInitValue) //Метод инициализации начального значения данных
+    // Конструктор
+    Adress(std::string NameCity, std::string NameStreet, int NumberHouse, int NumberApartment)
     {
-        cCounterResult = initialInitValue;
-        return cCounterResult;
-    };
+        this->cNameCity = NameCity;
+        this->cNameStreet = NameStreet;
+        this->cNumberHouse = NumberHouse;
+        this->cNumberApartment = NumberApartment;
+    }
 
-    int getCounter() //Метод просмотра значения элементов данных
+    // Метод создания строки полного адреса для вывода
+    std::string createAdress2Out()
     {
-        return cCounterResult;
+        cFullAdress =  cNameCity + ", " + cNameStreet + ", " + std::to_string(cNumberHouse)
+                       + ", " + std::to_string(cNumberApartment);
+        return cFullAdress;
     };
-
-    int counterPlus() //Метод увеличения значения на один
-    {
-        cCounterResult++;
-        return cCounterResult;
-    };
-
-    int counterMinus() //Метод уменьшения значения на один
-    {
-        cCounterResult--;
-        return cCounterResult;
-    };
-
 };
+
+enum class codeCommit
+{
+    fileInOpenError, fileOutOpenError
+};
+
+//Функция печати массива в файл
+int print_arrayForClassObjects(std::string* arrayForClassObjects, const int quantityAdresses)
+{
+    std::ofstream fileOut("out.txt", std::ios_base::trunc);
+
+    if (fileOut.is_open())
+    {
+        std::cout << "Файл out.txt успешно открыт." << std::endl;
+    }
+    else
+    {
+        std::cout << "Ошибка открытия файла" << std::endl;
+        return static_cast<int>(codeCommit::fileOutOpenError);
+    }
+    
+    fileOut << "Адреса:\t" << std::endl;
+        
+    for (int i = 0; i < quantityAdresses; i++)
+    {
+        fileOut << i+1 << ". " << arrayForClassObjects[i] << std::endl;
+    }
+    fileOut.close();
+};
+
+
+//Функция создания текстового динамического массива
+std::string* createTextArr(const int quantityAdresses)
+{
+    std::string* TextArr = new std::string[quantityAdresses]{};
+
+    return TextArr;
+}
+
+//Функция удаления динамического массива
+void delete_TextArr(std::string* TextArr, const int quantityAdresses)
+{
+    delete[] TextArr;
+    TextArr = nullptr;
+}
 
 int main()
 {
     setlocale(LC_ALL, "Russian"); //Корректное отображение Кириллицы
     system("chcp 1251");
 
-    //std::string checkInitialInitValue;
-    //int initialInitValue = 0;
-    //bool checkTrueInitialInitValue = false;
-    //Counter counter;
+    std::ifstream fileIn("in.txt"); // Открываем файл и проверяем удалось ли открыть
+    if (!fileIn)
+    {
+        std::cout << "Ошибка открытия файла in.txt." << std::endl;
+        return static_cast<int>(codeCommit::fileInOpenError);
+    }
+    else
+    {
+        std::cout << "Файл in.txt успешно открыт." << std::endl;
+    }
 
-    ////Цикл проверки и задания начального значения счётчика
-    //do
-    //{
-    //    std::cout << std::endl << "Вы хотите указать начальное значение счётчика? Введите да или нет: ";
-    //    std::cin >> checkInitialInitValue;
-    //    std::cout << std::endl;
+    int quantityAdresses = 0;
+    std::string NameCity = {};
+    std::string NameStreet = {};
+    int NumberHouse = 0;
+    int NumberApartment = 0;
 
-    //    if (checkInitialInitValue == "да" || checkInitialInitValue == "Да")
-    //    {
-    //        std::cout << "Введите начальное значение счётчика: ";
-    //        std::cin >> initialInitValue;
+    fileIn >> quantityAdresses; //Считываем кол-во адресов из файла(объектов класса) 
 
-    //        counter.setCounter(initialInitValue);
-    //        checkTrueInitialInitValue = true;
-    //    }
-    //    else if (checkInitialInitValue == "нет" || checkInitialInitValue == "Нет")
-    //    {
-    //        counter.setCounter(1);
-    //        checkTrueInitialInitValue = true;
-    //    }
-    //    else
-    //    {
-    //        std::cout << "Вы ввели неверное значение.";
-    //    }
-    //} while (!checkTrueInitialInitValue);
+    std::string* arrayForClassObjects = createTextArr(quantityAdresses); //Cоздаем динамический массив для объектов класса Adress
 
-    //std::cout << std::endl;
+    for (int i = 0; i < quantityAdresses; i++) //Считываем адрес
+    {
+        fileIn >> NameCity >> NameStreet >> NumberHouse >> NumberApartment;
+        Adress adress(NameCity, NameStreet, NumberHouse, NumberApartment);
+        arrayForClassObjects[i] = adress.createAdress2Out();
 
-    //std::string commandValue;
-    //bool checkCommand = false;
+    };
+    fileIn.close(); //Закрываем файл in.txt
 
-    ////Цикл работы счётчика
-    //do
-    //{
-    //    std::cout << "Введите команду ('+', '-', '=' или 'x'): ";
-    //    std::cin >> commandValue;
-
-    //    if (commandValue == "x")
-    //    {
-    //        std::cout << "Пока.";
-    //        checkCommand = true;
-    //    }
-    //    else if (commandValue == "+")
-    //    {
-    //        counter.counterPlus();
-    //    }
-    //    else if (commandValue == "-")
-    //    {
-    //        counter.counterMinus();
-    //    }
-    //    else if (commandValue == "=")
-    //    {
-    //        std::cout << "Значение счетчика: " << counter.getCounter() << "." << std::endl;
-    //    }
-    //    else
-    //    {
-    //        std::cout << "Вы ввели неверное значение." << std::endl;
-    //    }
-    //} while (!checkCommand);
+    print_arrayForClassObjects(arrayForClassObjects, quantityAdresses);
+    delete_TextArr(arrayForClassObjects, quantityAdresses);
+    
+    std::cout << "Результат работы программы смотри в файле out.txt" << std::endl;
 }
