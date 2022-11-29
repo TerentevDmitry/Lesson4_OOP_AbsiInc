@@ -8,28 +8,28 @@
 class Adress //Класс Адрес с методами
 {
 private:
-    std::string cNameCity;
-    std::string cNameStreet;
-    int cNumberHouse = 0;
-    int cNumberApartment = 0;
-    std::string cFullAdress;
+    std::string NameCity_;
+    std::string NameStreet_;
+    int NumberHouse_ = 0;
+    int NumberApartment_ = 0;
+    std::string FullAdress_;
 
 public:
     // Конструктор
     Adress(std::string NameCity, std::string NameStreet, int NumberHouse, int NumberApartment)
     {
-        this->cNameCity = NameCity;
-        this->cNameStreet = NameStreet;
-        this->cNumberHouse = NumberHouse;
-        this->cNumberApartment = NumberApartment;
+        NameCity_ = NameCity;
+        NameStreet_ = NameStreet;
+        NumberHouse_ = NumberHouse;
+        NumberApartment_ = NumberApartment;
     }
 
     // Метод создания строки полного адреса для вывода
     std::string createAdress2Out()
     {
-        cFullAdress = cNameCity + ", " + cNameStreet + ", " + std::to_string(cNumberHouse)
-            + ", " + std::to_string(cNumberApartment);
-        return cFullAdress;
+        FullAdress_ = NameCity_ + ", " + NameStreet_ + ", " + std::to_string(NumberHouse_)
+            + ", " + std::to_string(NumberApartment_);
+        return FullAdress_;
     };
 };
 
@@ -39,7 +39,7 @@ enum class codeCommit
 };
 
 //Функция печати массива в файл
-int print_arrayForClassObjects(std::string* arrayForClassObjects, const int quantityAdresses)
+int printArrayForClassObjects(std::string* arrayForClassObjects, const int quantityAdresses)
 {
     std::ofstream fileOut("out.txt", std::ios_base::trunc);
 
@@ -94,7 +94,7 @@ std::string* createTextArr(const int quantityAdresses)
 }
 
 //Функция удаления динамического массива
-void delete_TextArr(std::string* TextArr, const int quantityAdresses)
+void deleteTextArr(std::string* TextArr, const int quantityAdresses)
 {
     delete[] TextArr;
     TextArr = nullptr;
@@ -136,8 +136,8 @@ int main()
     fileIn.close(); //Закрываем файл in.txt
 
     addressSort(arrayForClassObjects, quantityAdresses); //Сортируем адреса
-    print_arrayForClassObjects(arrayForClassObjects, quantityAdresses); //Печатаем адреса в файл
-    delete_TextArr(arrayForClassObjects, quantityAdresses); //Удаляем массив
+    printArrayForClassObjects(arrayForClassObjects, quantityAdresses); //Печатаем адреса в файл
+    deleteTextArr(arrayForClassObjects, quantityAdresses); //Удаляем массив
 
     std::cout << "Результат работы программы смотри в файле out.txt" << std::endl;
 }
